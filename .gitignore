@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+venv/
+__pycache__/
+*.pyc
+
+# Database
+qdrant_local_db/
+
+# Environment Variables
+.env
+
+# IDE settings
+.vscode/
+.idea/
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# Personal Files / Temporary Analysis
+Convolve.docx
+convolve_content.txt
+read_docx.py
+frontend/# frontend.txt
+
+# Artifacts/Test Data
+stored_docs/
+presentation/architecture.md.part

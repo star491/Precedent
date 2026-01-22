@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+python-multipart
+qdrant-client
+groq
+sentence-transformers
+pypdf
+python-dotenv
+requests
