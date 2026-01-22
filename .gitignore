@@ -1,29 +1,24 @@
-# Dependencies
-node_modules/
-venv/
-__pycache__/
-*.pyc
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Database
-qdrant_local_db/
+node_modules
+dist
+dist-ssr
+*.local
 
-# Environment Variables
-.env
-
-# IDE settings
-.vscode/
-.idea/
-
-# OS generated
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
 .DS_Store
-Thumbs.db
-
-# Personal Files / Temporary Analysis
-Convolve.docx
-convolve_content.txt
-read_docx.py
-frontend/# frontend.txt
-
-# Artifacts/Test Data
-stored_docs/
-presentation/architecture.md.part
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

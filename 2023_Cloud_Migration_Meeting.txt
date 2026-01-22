@@ -1,0 +1,53 @@
+MEETING TRANSCRIPT: INFRASTRUCTURE MIGRATION STRATEGY
+DATE: 2023-05-15
+ATTENDEES:
+- Sarah Chen (CTO)
+- Mike Ross (Lead DevOps)
+- Jessica Pearson (CFO)
+- David Kim (VP of Engineering)
+
+TOPIC: Selecting a Cloud Provider (AWS vs. Azure vs. On-Prem)
+
+SARAH: Okay, let's get started. We have a critical decision today. Our on-premise servers in the Virginia data center are reaching end-of-life. We saw that outage last week cost us 4 hours of downtime. We need to move. The options on the table are: 1) Refresh the hardware (Stay On-Prem), 2) Migrate to AWS, or 3) Migrate to Azure. Mike, kick us off.
+
+MIKE: Right. So, I've run the numbers.
+Option 1, Staying On-Prem. It looks cheap operationally, but the capital expenditure (CapEx) is massive. We need to buy 14 new Dell PowerEdge servers immediately. That's a $200,000 check we have to write next month. Plus, we need to hire two more sysadmins to manage the patching and physical security. It just doesn't scale. If we grow 50% next year, we're stuck buying more hardware.
+
+JESSICA: $200k is a hard hit for Q2 cash flow. I'd prefer an OpEx model where we pay monthly. What about the cloud options? Azure offered us credits, right?
+
+MIKE: Yes. Azure came in aggressive. They offered $100,000 in credits for the first year. It's financially very attempting. However, there's a catch. Our tech stack is heavily reliant on open-source tools, specifically heavily customized PostgreSQL databases and Redis clusters.
+Azure's support for open-source has improved, but our team struggled with their "CosmosDB" interface during the PoC. It wasn't a 1:1 match for what we do.
+Also, and this is the big one: Nobody on the current DevOps team knows Azure. Not one person.
+
+DAVID: That's a huge risk. If we go Azure, we're talking about a 3-month learning curve minimum. We'd have to halt feature development just to train the team on Azure Resource Manager (ARM) templates. We can't afford to slow down the "Phoenix" product launch.
+
+SARAH: So what about AWS?
+
+MIKE: AWS is the natural fit.
+1. **Team Expertise**: We already have 3 certified AWS Solution Architects on the team. We "speak" AWS. We can migrate in 3 weeks, not 3 months.
+2. **Database Compatibility**: AWS Aurora (Postgres compatible) is exactly what we need. It handles the sharding logic we currently do manually. That saves us 20 hours a week of maintenance.
+3. **Stability**: AWS has the best uptime SLA in the region we need (us-east-1).
+
+JESSICA: But AWS is more expensive than Azure, right?
+
+MIKE: On paper, yes. AWS is about 15% more expensive per hour than Azure's discounted rate. BUT, if you factor in the "Time to Market" and the cost of retraining engineers, Azure ends up being more expensive in real terms. Plus, AWS offers "Reserved Instances" which can drop the price by 30% if we commit for a year.
+
+SARAH: Okay, let's look at the alternatives one last time.
+Why exactly are we rejecting On-Prem?
+MIKE: It's the $200k upfront cost and the lack of elasticity. We can't auto-scale physical servers during Black Friday traffic. We'd crash.
+
+Why are we rejecting Azure?
+DAVID: Purely velocity. The learning curve would delay the Phoenix launch by a quarter. The $100k credit isn't worth missing the market window.
+
+SARAH: Decision is made then. We go with AWS.
+The rationale is:
+- **Speed**: The team is already certified (3 engineers), ensuring we meet the Q3 launch deadline.
+- **Tech Fit**: Aurora is a drop-in replacement for our complex Postgres setup.
+- **Risk Mitigation**: On-prem hardware has become a liability (recent outages).
+- **Cost**: While AWS is pricier than Azure, the lack of retraining costs makes it cheaper TCO (Total Cost of Ownership).
+
+JESSICA: Agreed. I'll sign off on the AWS contract. Let's aim to complete the migration by June 30th.
+
+MIKE: I'll start the VPC setup tomorrow.
+
+[END OF TRANSCRIPT]

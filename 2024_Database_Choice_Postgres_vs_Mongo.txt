@@ -1,0 +1,38 @@
+TECHNICAL DECISION LOG: DATABASE ARCHITECTURE
+DATE: 2024-01-10
+TEAM: Engineering (Backend)
+ATTENDEES: David Kim (VP Eng), Maria Garcia (Lead Data Engineer), Tom Jenkins (Backend Dev)
+
+SUBJECT: Choosing the Primary Database for the new "User Activity Log" Service
+
+CONTEXT:
+We are building a new microservice to track user clicks and page views. We expect high write volume (10k writes/sec) but relatively simple read patterns.
+
+DECISION:
+We have decided to use **MongoDB (Atlas)** for this specific service.
+
+RATIONALE:
+1. **Schema Flexibility**: The user activity data is unstructured. We extract different metadata for different events (e.g., "video_watched" has duration, "button_clicked" has coordinates). A rigid SQL schema would require constant migration scripts, which slows us down. MongoDB's JSON-like document structure fits perfectly.
+2. **Write Performance**: Benchmark tests showed MongoDB handling 15,000 writes/second on a standard m5.large instance, whereas PostgreSQL began to lock up at 8,000 writes/second due to strict ACID compliance overhead which we don't strictly need for logs.
+3. **Scaling Strategy**: We anticipate this data growing to 50TB in a year. MongoDB's native sharding is more mature and easier to manage than Postgres table partitioning (which can get complex).
+
+ALTERNATIVES CONSIDERED & REJECTED:
+
+1. **PostgreSQL**:
+   - *Pros*: We already use it for the main user accounts. Strong consistency.
+   - *Cons*: Schema migrations for log data are painful. Horizontal scaling (sharding) is difficult to set up and maintain compared to Mongo.
+   - *Why Rejected*: The write throughput requirement (10k/sec) was the dealbreaker. Postgres struggled in our load tests without expensive hardware upgrades.
+
+2. **Cassandra**:
+   - *Pros*: Incredible write speeds, infinite scaling.
+   - *Cons*: Extremely high operational complexity. We don't have anyone on the team who has managed a Cassandra cluster in production.
+   - *Why Rejected*: Maintenance burden. We can't afford to hire a dedicated DBA just for this one service.
+
+3. **DynamoDB (AWS)**:
+   - *Pros*: Fully managed, infinite scale.
+   - *Cons*: Managing cost predictability is hard. Query patterns are limited (no complex ad-hoc queries).
+   - *Why Rejected*: Cost. Our estimation showed DynamoDB would cost $4,000/mo for our traffic, whereas Mongo Atlas would be ~$1,500/mo.
+
+OUTCOME:
+- Create a new Mongo Atlas cluster "Cluster-Logs-01" by Jan 15th.
+- Migration formatting standard: JSON schema v1.

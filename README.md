@@ -1,80 +1,73 @@
-# Precedent: Institutional Memory System
+# React + TypeScript + Vite
 
-**Precedent** is an AI-powered engine that transforms unstructured meeting transcripts and documents into a structured "Institutional Memory". It allows organizations to search for the *reasoning* behind past decisions (e.g., "Why did we reject Azure?") rather than just keyword matches.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## 🚀 Features
-*   **Reasoning Extraction:** Uses Groq (Llama-3) to extract detailed rationale, tradeoffs, and financial metrics.
-*   **Semantic Search:** Vector-based retrieval (Qdrant) finds relevant decisions even without exact keyword matches.
-*   **Privacy-First:** Embeddings are generated locally using `sentence-transformers`.
-*   **Hybrid Filtering:** Filter by Team, Date, or Tags.
+Currently, two official plugins are available:
 
----
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## 🛠️ Installation & Setup
+## React Compiler
 
-### prerequisites
-*   Python 3.10+
-*   Node.js & npm
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/SomyaPatidar06/Precedent.git
-cd Precedent
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
+
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
 
-### 2. Backend Setup
-```bash
-# Install Python dependencies
-pip install -r requirements.txt
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-# Set up Environment Variables
-# Copy the example file to a real .env file
-cp .env.example .env
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-# OPEN .env AND PASTE YOUR API KEY
-# You need a free key from https://console.groq.com/keys
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
-
-### 3. Frontend Setup
-```bash
-cd frontend
-npm install
-```
-
----
-
-## ▶️ Running the Application
-
-You need to run the Backend and Frontend in separate terminals.
-
-**Terminal 1: Backend**
-```bash
-# Make sure you are in the root directory
-python -m uvicorn backend.main:app --reload
-```
-*Backend runs on http://localhost:8000*
-
-**Terminal 2: Frontend**
-```bash
-cd frontend
-npm run dev
-```
-*Frontend runs on http://localhost:5173 (or similar)*
-
----
-
-## 📖 Usage Guide
-1.  **Ingest Data:** Go to the "Ingest" tab. Upload your meeting notes or PDFs.
-2.  **Search:** Go to the "Search" tab. Ask natural questions like:
-    *   *"Why did we choose Postgres over Mongo?"*
-    *   *"What was the budget for the cloud migration?"*
-3.  **View Context:** Click on a result to see the full Rationale, Alternatives, and Tradeoffs.
-
----
-
-## 🏗️ Architecture
-*   **Frontend:** React + Vite
-*   **Backend:** FastAPI
-*   **LLM:** Llama-3-70b (via Groq)
-*   **Vector DB:** Qdrant (Embedded/Local)
-*   **Embeddings:** all-MiniLM-L6-v2 (Local)

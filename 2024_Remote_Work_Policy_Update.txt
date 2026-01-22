@@ -1,0 +1,29 @@
+EXECUTIVE MEMO: HYBRID WORK POLICY UPDATE
+DATE: 2024-02-28
+FROM: People Operations (HR)
+TO: All Staff
+
+DECISION:
+Effective April 1st, 2024, the company is moving to a **"Remote-First" model with Optional Hub Usage**. We are explicitly rejecting the "Return to Office (RTO) Mandate".
+
+RATIONALE:
+1. **Talent Acquisition**: We analyzed our hiring data from 2023. We lost 4 key senior engineering candidates because we required them to relocate to San Francisco. By going Remote-First, we expand our talent pool to the entire US and Europe.
+2. **Employee Retention**: The internal survey (eNPS) showed that 85% of employees value flexibility as their #1 benefit. Mandating office days would likely trigger an attrition rate of ~20% (based on industry benchmarks).
+3. **Cost Savings**: We are reducing our office footprint. We will close the Seattle and Austin satellite offices, saving $1.2M annually in lease costs. We will keep the SF HQ as a collaboration hub.
+
+ALTERNATIVES CONSIDERED:
+
+1. **Mandatory hybrid (3 Days in Office)**:
+   - *Considered because*: Executives felt collaboration was suffering.
+   - *Rejected because*: It forces local hiring only. It hurts morale. We proved in 2020-2023 that we can ship products remotely.
+
+2. **Full Remote (No Office)**:
+   - *Considered because*: Maximum cost saving ($3M/year).
+   - *Rejected because*: Certain teams (Hardware, Design) specifically requested a physical space for prototyping. We need at least one hub (SF) for quarterly onsite meetups.
+
+OUTCOME:
+- Cancel leases for Austin and Seattle by March 31st.
+- Update all job postings to "Remote - US/EU".
+- Roll out "WeWork All Access" passes for employees who want a desk outside the home.
+
+TAGS: HR, Hiring, Budget, Culture
